@@ -1,0 +1,44 @@
+# 表示作业的类型，自动填充，请勿修改
+[type]
+type = spark
+  
+# 作业执行信息
+[job_info]
+
+# 表示作业执行时使用的hadoop账号，请修改为本组的hadoop账号，否则会报错
+usergroup = hadoop-peisongpa
+
+# 表示spark的版本信息，默认使用spark-2.2版本
+# 备选集合[spark-1.6, spark-2.2]
+spark_version = spark-2.2
+
+# 作业对应的主类名
+class = com.sankuai.banma.ai.delivery_scope.main.Main
+  
+# 执行作业必须的参数，提供默认配置，可以修改，不能删除
+[env_args]
+
+# 选择作业提交的队列
+queue = root.hadoop-peisongpa.etl
+
+master = yarn-cluster
+driver-memory = 14G
+executor-memory = 14G
+executor-cores = 8
+
+# 是否开启动态资源分配,默认开启
+is_dynamic_allocation = true
+
+# 开启动态资源分配后该参数表示最大executor数
+num-executors = 300
+  
+# 执行作业非必须的参数，提供默认配置，可以修改，删除
+[option_env_args]
+# 作业运行次数，大于1代表会重试
+spark.yarn.maxAppAttempts = 1
+
+#spark.yarn.executor.memoryOverhead = 1024
+
+# 作业参数，可以不填，在执行命令中指定
+[args]
+args =
