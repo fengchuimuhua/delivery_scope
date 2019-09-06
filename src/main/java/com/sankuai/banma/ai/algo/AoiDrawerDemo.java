@@ -223,7 +223,7 @@ public class AoiDrawerDemo {
     }
 
     private void prepareData() throws IOException, ParseException {
-        BufferedReader br = new BufferedReader(new FileReader("poi_aoi.txt"));
+        BufferedReader br = new BufferedReader(new FileReader("beijing_poi_aoiinfo.txt"));
         String line = null;
         Map<Integer, Set<Integer>> pid2aidsetMap = Maps.newHashMap();
         while ((line = br.readLine()) != null) {

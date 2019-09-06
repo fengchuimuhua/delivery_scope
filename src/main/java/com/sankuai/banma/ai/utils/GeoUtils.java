@@ -178,7 +178,7 @@ public class GeoUtils {
         GeometryFactory geometryFactory = new GeometryFactory();
 
         GeometryCollection geometryCollection = (GeometryCollection) geometryFactory.buildGeometry(polygonList);
-        ConcaveHull concaveHull = new ConcaveHull(geometryCollection, 0.005);
+        ConcaveHull concaveHull = new ConcaveHull(geometryCollection, 0.008);
 
         return (Polygon) concaveHull.getConcaveHull();
     }

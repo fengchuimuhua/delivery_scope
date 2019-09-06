@@ -1,0 +1,62 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <style type="text/css">
+        body,html,#container{
+            height: 100%;
+            margin: 0px;
+        }
+        .input-item {
+            position: relative;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            -ms-flex-align: center;
+            align-items: center;
+            width: 100%;
+            height: 3rem;
+        }
+    </style>
+    <title>Visual Map for Delivery Algorithm</title>
+    <link href="public/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+</head>
+<body>
+<div id="container" tabindex="0"></div>
+
+<div class="input-card" style="width: 120px">
+    <button class="btn" onclick="polyEditor.open()" style="margin-bottom: 5px">开始编辑</button>
+    <button class="btn" onclick="polyEditor.close()">结束编辑</button>
+</div>
+
+<script src="public/js/jquery/jquery-3.3.1.min.js"></script>
+<script src="public/bootstrap/js/bootstrap.min.js"></script>
+<script src="public/jquery-editable-select/dist/jquery-editable-select.js"></script>
+<link href="public/jquery-editable-select/dist/jquery-editable-select.css" rel="stylesheet">
+<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.5&key=您申请的key值"></script>
+
+<link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+<script src="https://webapi.amap.com/maps?v=1.4.15&key=您申请的key值&plugin=AMap.PolyEditor"></script>
+<script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
+
+<script type="text/javascript" src="public/js/latlon-geohash/latlon-geohash.js"></script>
+<script type="text/javascript" src="revenue/js/map_utils.js"></script>
+
+<!--<script type="text/javascript" src="revenue/js/beijing_aoi_block/not_in_scope_aoi.js"></script>-->
+<!--<script type="text/javascript" src="revenue/js/beijing_aoi_block/not_in_scope_aoi_info.js"></script>-->
+<script type="text/javascript" src="revenue/js/beijing/not_in_scope_block.js"></script>
+<script type="text/javascript" src="revenue/js/beijing/not_in_scope_block_info.js"></script>
+<script type="text/javascript" src="revenue/js/beijing/original_scope.js"></script>
+<!--<script type="text/javascript" src="revenue/js/beijing_aoi_block/poi_aoi_scope.js"></script>-->
+<script type="text/javascript" src="revenue/js/beijing/poi_block_scope.js"></script>
+<script type="text/javascript" src="revenue/js/beijing/poi_point.js"></script>
+<!--<script type="text/javascript" src="revenue/js/beijing_aoi_block/scope_aoi.js"></script>-->
+<!--<script type="text/javascript" src="revenue/js/beijing_aoi_block/scope_aoi_info.js"></script>-->
+<script type="text/javascript" src="revenue/js/beijing/scope_block.js"></script>
+<script type="text/javascript" src="revenue/js/beijing/scope_block_info.js"></script>
+
+<script type="text/javascript" src="revenue/js/drawblock.js"></script>
+</body>
+</html>

@@ -1,9 +1,9 @@
 package com.sankuai.banma.ai.entity;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.sankuai.banma.ai.entity.Aoi;
-import com.sankuai.banma.ai.entity.Poi;
 import com.sankuai.banma.ai.utils.GeoUtils;
+import com.sankuai.meituan.banma.shiparea.helper.PolygonHelper;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
@@ -13,40 +13,51 @@ import com.vividsolutions.jts.io.WKTReader;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 
 /**
  * Created by zhangrunfeng on 2019-08-21
  */
-public class PoiAoiData {
+public class DataCollection {
 
     // poiID 到 Poi 的映射
     public Map<Long, Poi> pid2PoiMap;
+
     // aoiID 到 Aoi 的映射
     public Map<Long, Aoi> aid2AoiMap;
     // poiID 对应的候选的AOI列表
     public Map<Long, List<Long>> pid2AoiListMap;
+
+    // blockID 到 Block 的映射
+    public Map<Long, Block> bid2BlockMap;
+    // poiID 对应的候选的Block列表
+    public Map<Long, List<Long>> pid2BlockListMap;
 
     // 用于生成最终集合图形的Factory
     private GeometryFactory geometryFactory;
     // Well Known Text 格式文件读取器
     private WKTReader wktReader;
 
-    // 数据文件存储位置
-    private String path;
+    // aoi 数据文件存储位置
+    private String aoiDataPath;
+    // block 数据文件存储位置
+    private String blockDataPath;
 
     // 构建对象时即完成数据预处理
-    public PoiAoiData(String path) {
-        this.path = path;
+    public DataCollection(String aoiDataPath, String blockDataPath) {
+        this.aoiDataPath = aoiDataPath;
+        this.blockDataPath = blockDataPath;
         this.geometryFactory = new GeometryFactory();
         this.wktReader = new WKTReader(this.geometryFactory);
-        prepareData();
+        prepareAoiData();
+        prepareBlockData();
     }
 
     /**
-     * 读取文件并将相关数据存储至类成员变量中
+     * 读取AOI文件并将相关数据存储至类成员变量中
      */
-    private void prepareData() {
+    private void prepareAoiData() {
         if (pid2PoiMap == null) {
             pid2PoiMap = Maps.newHashMap();
         }
@@ -58,7 +69,7 @@ public class PoiAoiData {
         }
 
         try{
-            BufferedReader br = new BufferedReader(new FileReader(path));
+            BufferedReader br = new BufferedReader(new FileReader(aoiDataPath));
             String line;
             while ((line = br.readLine()) != null) {
                 String[] info = line.split("\t");
@@ -111,6 +122,60 @@ public class PoiAoiData {
                 System.out.println("-- poi id : " + entry.getKey() + "; candidate aoi number : " + entry.getValue().size());
             }
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 读取Block文件并将相关数据存储至类成员变量中
+     */
+    private void prepareBlockData() {
+        if (bid2BlockMap == null) {
+            bid2BlockMap = Maps.newHashMap();
+        }
+        if (pid2BlockListMap == null) {
+            pid2BlockListMap = Maps.newHashMap();
+        }
+
+        try{
+            BufferedReader br = new BufferedReader(new FileReader(blockDataPath));
+            String line;
+            while((line = br.readLine()) != null) {
+                try{
+                    String[] infoArr = line.split("\t");
+
+                    long poiId = Long.parseLong(infoArr[0]);
+                    long blockId = Long.parseLong(infoArr[1]);
+                    long adminCode = Long.parseLong(infoArr[2]);
+                    String adminName = infoArr[3];
+                    double greenPercent = Double.parseDouble(infoArr[4]);
+                    double waterPercent = Double.parseDouble(infoArr[5]);
+                    String scopeStr = infoArr[6];
+                    double shapeArea = Double.parseDouble(infoArr[7]);
+                    double shapeLen = Double.parseDouble(infoArr[8]);
+                    double dist = Double.parseDouble(infoArr[9]);
+                    int orderNum = Integer.parseInt(infoArr[10]);
+
+                    if (!bid2BlockMap.containsKey(blockId)) {
+                        Polygon blockPolygon = PolygonHelper.createPolygonFromArea(scopeStr);
+                        Point centroidPoint = blockPolygon.getCentroid();
+                        Block block = new Block(blockId, adminCode, adminName, greenPercent, waterPercent, blockPolygon, centroidPoint, shapeArea, shapeLen, orderNum);
+                        bid2BlockMap.put(blockId, block);
+                    }
+
+                    if (!pid2BlockListMap.containsKey(poiId)) {
+                        pid2BlockListMap.put(poiId, Lists.newArrayList());
+                    }
+
+                    if (!pid2BlockListMap.get(poiId).contains(blockId)) {
+                        pid2BlockListMap.get(poiId).add(blockId);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            br.close();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
