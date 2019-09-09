@@ -110,9 +110,32 @@ public class Main {
 
         // 武汉配送范围绘制
 
-        long poiId = 3254363L;
-        String cityName = "wuhan";
-        String oldScope = "[{\"x\":30444380,\"y\":114399747},{\"x\":30424154,\"y\":114419395},{\"x\":30422709,\"y\":114443492},{\"x\":30433712,\"y\":114449459},{\"x\":30439114,\"y\":114447283},{\"x\":30440023,\"y\":114459614},{\"x\":30440023,\"y\":114459528},{\"x\":30445906,\"y\":114459915},{\"x\":30450480,\"y\":114461453},{\"x\":30469281,\"y\":114459050},{\"x\":30466881,\"y\":114448499},{\"x\":30465956,\"y\":114436790},{\"x\":30462369,\"y\":114405972}]";
+//        long poiId = 3254363L;
+//        String cityName = "wuhan";
+//        String oldScope = "[{\"x\":30444380,\"y\":114399747},{\"x\":30424154,\"y\":114419395},{\"x\":30422709,\"y\":114443492},{\"x\":30433712,\"y\":114449459},{\"x\":30439114,\"y\":114447283},{\"x\":30440023,\"y\":114459614},{\"x\":30440023,\"y\":114459528},{\"x\":30445906,\"y\":114459915},{\"x\":30450480,\"y\":114461453},{\"x\":30469281,\"y\":114459050},{\"x\":30466881,\"y\":114448499},{\"x\":30465956,\"y\":114436790},{\"x\":30462369,\"y\":114405972}]";
+//
+//        String aoiDataPath = "data/aoi_data/" + cityName + "/" + cityName + "_poi_aoiinfo.txt";
+//        String blockDataPath = "data/block_data/" + cityName + "/" + cityName + "_poi_blockinfo.txt";
+//
+//        double maxDistThres = 8000;
+//
+//        AoiSelectAlgo algo = new AoiSelectAlgo(aoiDataPath, blockDataPath);
+//        algo.MAX_AREA_THRESHOLD = PolygonHelper.getArea(PolygonHelper.createPolygonFromArea(oldScope));
+//
+////        algo.loadAoiDistMap("data/aoi_data/" + cityName + "/" + cityName + "_poi_aoi_dist.txt");
+////        algo.loadBlockDistMap("data/block_data/" + cityName + "/" + cityName + "_poi_block_dist.txt");
+//
+//        algo.compAoiScore();
+//        algo.compBlockScore();
+//        algo.selectAoi();
+//        algo.selectBlock();
+//
+//        algo.write(poiId, oldScope, cityName, maxDistThres);
+
+        // 天津范围绘制
+        long poiId = 2889785L;
+        String cityName = "tianjin";
+        String oldScope = "[{\"x\":39119682,\"y\":117109692},{\"x\":39105030,\"y\":117113125},{\"x\":39091708,\"y\":117123768},{\"x\":39083980,\"y\":117137844},{\"x\":39080249,\"y\":117159473},{\"x\":39082648,\"y\":117180416},{\"x\":39093307,\"y\":117200329},{\"x\":39107162,\"y\":117212002},{\"x\":39120747,\"y\":117211658},{\"x\":39132466,\"y\":117207539},{\"x\":39145514,\"y\":117199985},{\"x\":39157761,\"y\":117181103},{\"x\":39158560,\"y\":117161533},{\"x\":39157495,\"y\":117145740},{\"x\":39149508,\"y\":117127201},{\"x\":39135129,\"y\":117114841},{\"x\":39128737,\"y\":117111065},{\"x\":39119682,\"y\":117109692}]";
 
         String aoiDataPath = "data/aoi_data/" + cityName + "/" + cityName + "_poi_aoiinfo.txt";
         String blockDataPath = "data/block_data/" + cityName + "/" + cityName + "_poi_blockinfo.txt";
